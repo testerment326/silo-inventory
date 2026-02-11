@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>일일 재고 현황표 레이아웃</title>
+<style>
+body{
+    background:#dcdcdc;
+    display:flex;
+    justify-content:center;
+    padding:30px;
+    font-family:Arial;
+}
+
+/* 붙여넣기 패널 */
+.controls{
+    width:1400px;
+    margin:0 auto 18px auto;
+    padding:12px;
+    border:3px solid #222;
+    background:#ffffff;
+    box-sizing:border-box;
+}
+.controls-title{
+    font-size:16px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+#pasteData{
+    width:100%;
+    height:120px;
+    box-sizing:border-box;
+    border:2px solid #222;
+    padding:10px;
+    font-size:14px;
+    resize:vertical;
+}
+.controls-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:10px;
+}
+#applyBtn{
+    padding:10px 16px;
+    font-size:14px;
+    border:2px solid #222;
+    background:#f5f5f5;
+    cursor:pointer;
+}
+#applyBtn:active{ transform:translateY(1px); }
+.status{ font-size:14px; }
+
+.wrapper{
+    position:relative;
+    width:1400px;
+    height:900px;
+    background:#efefef;
+    border:3px solid #222;
+}
+
+.title{
+    text-align:center;
+    font-size:34px;
+    margin-top:20px;
+    letter-spacing:8px;
+    font-weight:bold;
+}
+
+/* 네모 7칸 × 2줄 */
+.grid{
+    position:absolute;
+    top:260px;
+    left:140px;
+    display:grid;
+    grid-template-columns:repeat(7,160px);
+    grid-template-rows:repeat(2,240px);
+}
+
+.cell{
+    width:160px;
+    height:240px;
+    border:3px solid #222;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    background:#ddd;
+    font-size:18px;
+}
+
+/* 사각형 내부 텍스트 최종 위치 */
+.cell .top-text{ margin-top:30px; }
+.cell .bottom-text{ margin-bottom:30px; }
+
+/* 원 6칸 × 3줄 */
+.circle{
+    position:absolute;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:3px solid #111;
+    background:#f9f9f9;
+    transform:translate(-50%, -50%);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    font-size:16px;
+}
+
+.top-text{ font-size:16px; }
+.middle-text{ font-size:20px; font-weight:bold; }
+.bottom-text{ font-size:14px; }
+
+</style>
+</head>
+<body>
+
+
+<div class="wrapper">
+<div class="title">일 일 재 고 현 황 표</div>
+
+<!-- 2번줄/4번줄 네모 (A201~A207, A401~A407) -->
+<div class="grid">
+  <!-- 2번줄 -->
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A201</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A202</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A203</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A204</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A205</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A206</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A207</div></div>
+
+  <!-- 4번줄 -->
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A401</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A402</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A403</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A404</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A405</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A406</div></div>
+  <div class="cell"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A407</div></div>
+</div>
+
+<!-- 1번줄 원 (A101~A106) -->
+<div class="circle" style="top:260px; left:300px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A101</div></div>
+<div class="circle" style="top:260px; left:460px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A102</div></div>
+<div class="circle" style="top:260px; left:620px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A103</div></div>
+<div class="circle" style="top:260px; left:780px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A104</div></div>
+<div class="circle" style="top:260px; left:940px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A105</div></div>
+<div class="circle" style="top:260px; left:1100px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A106</div></div>
+
+<!-- 3번줄 원 (A301~A306) -->
+<div class="circle" style="top:500px; left:300px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A301</div></div>
+<div class="circle" style="top:500px; left:460px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A302</div></div>
+<div class="circle" style="top:500px; left:620px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A303</div></div>
+<div class="circle" style="top:500px; left:780px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A304</div></div>
+<div class="circle" style="top:500px; left:940px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A305</div></div>
+<div class="circle" style="top:500px; left:1100px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A306</div></div>
+
+<!-- 5번줄 원 (A501~A506) -->
+<div class="circle" style="top:740px; left:300px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A501</div></div>
+<div class="circle" style="top:740px; left:460px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A502</div></div>
+<div class="circle" style="top:740px; left:620px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A503</div></div>
+<div class="circle" style="top:740px; left:780px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A504</div></div>
+<div class="circle" style="top:740px; left:940px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A505</div></div>
+<div class="circle" style="top:740px; left:1100px;"><div class="top-text">곡종</div><div class="middle-text">재고량</div><div class="bottom-text">A506</div></div>
+
+</div>
+
+<!-- 붙여넣기 박스 (엑셀에서 복사 → 아래에 붙여넣기) -->
+<div class="controls">
+  <div class="controls-title">엑셀 데이터 붙여넣기 (화면에 없는 장치장은 자동 무시)</div>
+  <textarea id="pasteData" placeholder="장치장	곡종	재고량
+A101	WUR	1,600.000
+A102	WCRS	1,700.557
+..."></textarea>
+  <div class="controls-row">
+    <button id="applyBtn">업데이트</button>
+    <div id="status" class="status">대기중</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function buildTankMap(){
+    const map = new Map();
+    const blocks = document.querySelectorAll('.cell, .circle');
+    blocks.forEach(el => {
+      const idEl = el.querySelector('.bottom-text');
+      if(!idEl) return;
+      const id = (idEl.textContent || '').trim().toUpperCase();
+      if(id) map.set(id, el);
+    });
+    return map;
+  }
+
+  function parseExcelText(raw){
+    const normalized = (raw || '').split('\r').join('');
+    const lines = normalized
+      .split('\n')
+      .map(l => l.trim())
+      .filter(l => l.length > 0);
+
+    if(lines.length === 0) return [];
+
+    // 헤더(장치장/곡종/재고량)면 1줄 제거
+    const first = lines[0].split(' ').join('').split('\t').join('');
+    const hasHeader = first.includes('장치장') && first.includes('곡종') && first.includes('재고량');
+    const dataLines = hasHeader ? lines.slice(1) : lines;
+
+    const rows = [];
+    for(const line of dataLines){
+      const parts = line.split('\t');
+      if(parts.length < 3) continue;
+
+      const tank = (parts[0] || '').trim().toUpperCase();
+      const grain = (parts[1] || '').trim();
+      let qty = (parts.slice(2).join('	') || '').trim();
+      // 콤마(,) 단위 제거
+      qty = qty.replace(/,/g, '');
+
+      if(!tank) continue;
+      rows.push({ tank, grain, qty });
+    }
+    return rows;
+  }
+
+  function applyUpdate(){
+    const statusEl = document.getElementById('status');
+    const raw = document.getElementById('pasteData').value;
+
+    const tankMap = buildTankMap();
+    const rows = parseExcelText(raw);
+
+    let updated = 0;
+    let ignored = 0;
+
+    for(const r of rows){
+      const el = tankMap.get(r.tank);
+      if(!el){
+        ignored++; // 화면에 없는 장치장은 무시
+        continue;
+      }
+
+      const top = el.querySelector('.top-text');
+      const mid = el.querySelector('.middle-text');
+
+      if(top) top.textContent = r.grain || '';
+      if(mid) mid.textContent = r.qty || '';
+      updated++;
+    }
+
+    statusEl.textContent = `완료: 업데이트 ${updated}개, 무시 ${ignored}개`;
+  }
+
+  document.getElementById('applyBtn').addEventListener('click', applyUpdate);
+})();
+</script>
+
+</body>
+</html>
