@@ -219,9 +219,9 @@ A102	WCRS	1,700.557
 
       const tank = (parts[0] || '').trim().toUpperCase();
       const grain = (parts[1] || '').trim();
-      let qty = (parts.slice(2).join('	') || '').trim();
-      // 콤마(,) 단위 제거
-      qty = qty.replace(/,/g, '');
+
+      let qty = (parts.slice(2).join('\t') || '').trim();
+      qty = qty.replace(/,/g, ''); // 콤마 제거
 
       if(!tank) continue;
       rows.push({ tank, grain, qty });
@@ -229,7 +229,35 @@ A102	WCRS	1,700.557
     return rows;
   }
 
-  function applyUpdate(){
+  async function loadState(){
+    const statusEl = document.getElementById('status');
+    try{
+      statusEl.textContent = '서버에서 불러오는 중...';
+      const res = await fetch('/api/state');
+      if(!res.ok) throw new Error('GET /api/state 실패');
+      const data = await res.json();
+
+      const tankMap = buildTankMap();
+      let applied = 0;
+      for(const [tank, v] of Object.entries(data)){
+        const el = tankMap.get(String(tank).toUpperCase());
+        if(!el) continue;
+
+        const top = el.querySelector('.top-text');
+        const mid = el.querySelector('.middle-text');
+
+        if(top) top.textContent = v.grain ?? '';
+        if(mid) mid.textContent = v.qty ?? '';
+        applied++;
+      }
+      statusEl.textContent = `불러오기 완료: ${applied}개 반영`;
+    }catch(e){
+      statusEl.textContent = '불러오기 실패 (서버/DB 확인)';
+      console.error(e);
+    }
+  }
+
+  async function applyUpdate(){
     const statusEl = document.getElementById('status');
     const raw = document.getElementById('pasteData').value;
 
@@ -239,8 +267,12 @@ A102	WCRS	1,700.557
     let updated = 0;
     let ignored = 0;
 
+    // 서버에 저장할 payload
+    const payload = {};
+
     for(const r of rows){
-      const el = tankMap.get(r.tank);
+      const tank = (r.tank || '').toUpperCase();
+      const el = tankMap.get(tank);
       if(!el){
         ignored++; // 화면에 없는 장치장은 무시
         continue;
@@ -251,13 +283,30 @@ A102	WCRS	1,700.557
 
       if(top) top.textContent = r.grain || '';
       if(mid) mid.textContent = r.qty || '';
+
+      payload[tank] = { grain: r.grain || '', qty: r.qty || '' };
       updated++;
     }
 
-    statusEl.textContent = `완료: 업데이트 ${updated}개, 무시 ${ignored}개`;
+    statusEl.textContent = `저장 중... (업데이트 ${updated}개, 무시 ${ignored}개)`;
+
+    try{
+      const res = await fetch('/api/state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('POST /api/state 실패');
+
+      statusEl.textContent = `완료: 업데이트 ${updated}개, 무시 ${ignored}개 (서버 저장됨)`;
+    }catch(e){
+      statusEl.textContent = `업데이트 ${updated}개, 무시 ${ignored}개 (서버 저장 실패)`;
+      console.error(e);
+    }
   }
 
   document.getElementById('applyBtn').addEventListener('click', applyUpdate);
+  loadState(); // 페이지 열 때 DB에서 불러오기
 })();
 </script>
 
